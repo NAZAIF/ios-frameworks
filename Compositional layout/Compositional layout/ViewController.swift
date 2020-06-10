@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ViewController.swift
 //  Compositional layout
 //
 //  Created by jerin on 09/06/20.
@@ -8,14 +8,18 @@
 
 import SwiftUI
 
-class FoodController: UICollectionViewController {
+class ViewController: UICollectionViewController {
     init() {
-        super.init(collectionViewLayout: FoodController.createLayout())
+        super.init(collectionViewLayout: ViewController.createLayout())
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    static let categoryHeaderId = "categoryHeaderID"
+    let headerId = "headerId"
+    private let cellId = "cellId"
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
@@ -59,9 +63,12 @@ class FoodController: UICollectionViewController {
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
-        return header
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.backgroundColor = .white
+        navigationItem.title = "Food Joe"
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(Header.self , forSupplementaryViewOfKind: ViewController.categoryHeaderId, withReuseIdentifier: headerId)
     }
     
     class Header: UICollectionReusableView {
@@ -84,16 +91,9 @@ class FoodController: UICollectionViewController {
         }
     }
     
-    static let categoryHeaderId = "categoryHeaderID"
-    let headerId = "headerId"
-    private let cellId = "cellId"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView.backgroundColor = .white
-        navigationItem.title = "Food Joe"
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(Header.self , forSupplementaryViewOfKind: FoodController.categoryHeaderId, withReuseIdentifier: headerId)
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
+        return header
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -112,5 +112,4 @@ class FoodController: UICollectionViewController {
         cell.backgroundColor = .red
         return cell
     }
-    
 }
