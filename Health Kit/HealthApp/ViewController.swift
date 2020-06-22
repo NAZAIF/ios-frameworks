@@ -2,9 +2,6 @@
 //  ViewController.swift
 //  HealthApp
 //
-//  Created by Nyisztor, Karoly on 8/4/18.
-//  Copyright © 2018 Nyisztor, Karoly. All rights reserved.
-//
 
 import UIKit
 import HealthKit
